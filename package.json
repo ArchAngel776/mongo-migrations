@@ -1,0 +1,10 @@
+{
+  "name": "mongo-migrations",
+  "version": "1.0.0",
+  "description": "Database migration tool for the MongoDB engine.",
+  "main": "build/index.js",
+  "repository": "https://github.com/ArchAngel776/mongo-migrations.git",
+  "author": "ArchAngel776",
+  "license": "MIT",
+  "private": false
+}
