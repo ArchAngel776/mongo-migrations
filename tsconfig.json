@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "allowJs": false,
+        "alwaysStrict": true,
+        "strict": false,
+        "module": "es2022",
+        "moduleResolution": "nodenext",
+        "target": "es2024",
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "outDir": "./build",
+        "sourceRoot": "./src",
+        "declaration": true,
+        "declarationMap": true,
+        "declarationDir": "./@types",
+        "baseUrl": "./src"
+    },
+    "include": ["src"],
+    "exclude": ["node_modules"]
+}
