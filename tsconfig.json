@@ -15,6 +15,6 @@
         "declarationDir": "./@types",
         "baseUrl": "./src"
     },
-    "include": ["src"],
+    "include": ["@types", "src"],
     "exclude": ["node_modules"]
 }
