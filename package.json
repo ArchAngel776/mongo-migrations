@@ -1,6 +1,6 @@
 {
   "name": "mongo-migration-tool",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": false,
   "description": "Database migration tool for the MongoDB engine.",
   "keywords": [
