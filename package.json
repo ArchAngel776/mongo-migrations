@@ -1,6 +1,6 @@
 {
   "name": "mongo-migrations",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Database migration tool for the MongoDB engine.",
   "main": "build/index.js",
   "scripts": {
