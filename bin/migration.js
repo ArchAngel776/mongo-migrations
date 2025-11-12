@@ -6,7 +6,9 @@ const fs = require("fs");
 const { Connection, Transaction } = require("../build/index");
 
 
-const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS } = process.env
+const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS } = process.env;
+
+const ROOT = process.cwd();
 
 
 const YEAR_LENGTH   = 4;
@@ -154,11 +156,11 @@ function create(name)
 
     const fullName = `M${year}${month}${day}_${hour}${minute}${second}_${name}`;
 
-    const template = fs.readFileSync(path.resolve(process.cwd(), "templates", "migration.tpl"), { encoding: "utf-8" });
+    const template = fs.readFileSync(path.resolve(ROOT, "templates", "migration.tpl"), { encoding: "utf-8" });
 
     const content = template.replaceAll(/\$\{name\}/g, fullName);
 
-    fs.writeFileSync(path.resolve(process.cwd(), "migrations", `${fullName.toLocaleLowerCase()}.js`), content, { encoding: "utf-8" });
+    fs.writeFileSync(path.resolve(ROOT, "migrations", `${fullName.toLocaleLowerCase()}.js`), content, { encoding: "utf-8" });
 
     console.log(`Migration "${fullName}" successfully created.`);
 }
@@ -202,7 +204,7 @@ async function up()
         transaction.begin();
 
 
-        const Migration = require(`${process.cwd()}/migrations/${migration}`).default;
+        const Migration = require(`${ROOT}/migrations/${migration}`).default;
 
         const mig = new Migration(db, transaction.getSession);
 
@@ -211,7 +213,7 @@ async function up()
         {
             if (!await mig.apply())
             {
-                console.log(`Cannot apply migration "${migration}" - internal migration's validation failed.`)
+                console.log(`Cannot apply migration "${migration}" - internal migration's validation failed.`);
 
                 await transaction.rollback();
                 return;
@@ -278,7 +280,7 @@ async function down(length)
         transaction.begin();
 
 
-        const Migration = require(`${process.cwd()}/migrations/${migration}`).default;
+        const Migration = require(`${ROOT}/migrations/${migration}`).default;
 
         const mig = new Migration(db, transaction.getSession);
 
@@ -287,7 +289,7 @@ async function down(length)
         {
             if (!await mig.revert())
             {
-                console.log(`Cannot revert migration "${migration}" - internal migration's validation failed.`)
+                console.log(`Cannot revert migration "${migration}" - internal migration's validation failed.`);
 
                 await transaction.rollback();
                 return;
