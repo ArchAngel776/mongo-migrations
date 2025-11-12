@@ -14,6 +14,9 @@
         "declarationMap": true,
         "declarationDir": "./@types",
         "baseUrl": "./src",
+        "paths": {
+            "@app/*": ["app/*"]
+        },
         "emitDeclarationOnly": true
     },
     "include": ["src"],
