@@ -151,13 +151,15 @@ function create(name)
     const second    = zeroLeading(date.getSeconds(),    SECOND_LENGTH);
 
 
-    const fullName = `M${year}_${month}_${day}_${hour}_${minute}_${second}_${name}`;
+    const fullName = `M${year}${month}${day}_${hour}${minute}${second}_${name}`;
 
     const template = fs.readFileSync(path.resolve(process.cwd(), "templates", "migration.tpl"), { encoding: "utf-8" });
 
     const content = template.replaceAll(/\$\{name\}/g, fullName);
 
     fs.writeFileSync(path.resolve(process.cwd(), "migrations", `${fullName.toLocaleLowerCase()}.js`), content, { encoding: "utf-8" });
+
+    console.log(`Migration "${fullName}" successfully created.`);
 }
 
 
