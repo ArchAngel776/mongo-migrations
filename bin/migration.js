@@ -226,6 +226,7 @@ async function up()
             throw error;
         }
 
+
         await db.collection("migrations").insertOne({ _id: new ObjectId, migration_name: migration, created_at: new Date });
 
         console.log(`Migration "${migration}" successfully applied.`);
