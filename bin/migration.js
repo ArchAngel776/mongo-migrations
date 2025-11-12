@@ -156,7 +156,7 @@ function create(name)
 
     const fullName = `M${year}${month}${day}_${hour}${minute}${second}_${name}`;
 
-    const template = fs.readFileSync(path.resolve(ROOT, "templates", "migration.tpl"), { encoding: "utf-8" });
+    const template = fs.readFileSync("../templates/migration.tpl", { encoding: "utf-8" });
 
     const content = template.replaceAll(/\$\{name\}/g, fullName);
 
