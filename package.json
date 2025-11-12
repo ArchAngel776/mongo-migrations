@@ -1,6 +1,7 @@
 {
   "name": "mongo-migration-tool",
   "version": "1.0.2",
+  "private": false,
   "description": "Database migration tool for the MongoDB engine.",
   "keywords": [
     "node",
@@ -15,17 +16,16 @@
     "mongo-migration-tool"
   ],
   "main": "build/index.js",
+  "types": "@types/index.d.ts",
   "scripts": {
     "build": "npx babel src --out-dir build --extensions=\".ts\" && tsc && tsc-alias"
+  },
+  "bin": {
+    "migration": "bin/migration.js"
   },
   "repository": "https://github.com/ArchAngel776/mongo-migration-tool.git",
   "author": "ArchAngel776",
   "license": "MIT",
-  "private": false,
-  "types": "@types/index.d.ts",
-  "bin": {
-    "migration": "bin/migration.js"
-  },
   "devDependencies": {
     "@babel/cli": "^7.28.3",
     "@babel/core": "^7.28.5",
