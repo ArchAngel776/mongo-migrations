@@ -208,16 +208,23 @@ async function up()
         const mig = new Migration(db, transaction.getSession);
 
         
-        if (!await mig.apply())
+        try
         {
-            console.log(`Cannot apply migration "${migration}" - internal migration's validation failed.`)
+            if (!await mig.apply())
+            {
+                console.log(`Cannot apply migration "${migration}" - internal migration's validation failed.`)
 
-            await transaction.rollback();
-            continue;
+                await transaction.rollback();
+                return;
+            }
+
+            await transaction.commit();
         }
-
-        await transaction.commit();
-
+        catch (error)
+        {
+            await client.close();
+            throw error;
+        }
 
         await db.collection("migrations").insertOne({ _id: new ObjectId, migration_name: migration, created_at: new Date });
 
