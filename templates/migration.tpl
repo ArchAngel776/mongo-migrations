@@ -10,6 +10,6 @@ export default class ${name} extends Migration
 
     async revert()
     {
-
+        
     }
 }
