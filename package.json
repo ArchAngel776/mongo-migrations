@@ -4,8 +4,7 @@
   "description": "Database migration tool for the MongoDB engine.",
   "main": "build/index.js",
   "scripts": {
-    "build": "npx babel src --out-dir build --extensions=\".ts\" && tsc",
-    "migration": "node --env-file=.env bin/migration.js"
+    "build": "npx babel src --out-dir build --extensions=\".ts\" && tsc"
   },
   "repository": "https://github.com/ArchAngel776/mongo-migrations.git",
   "author": "ArchAngel776",
