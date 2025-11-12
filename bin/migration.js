@@ -2,7 +2,6 @@
 
 const path = require("path");
 const fs = require("fs");
-const { ObjectId } = require("mongodb");
 
 const { Connection, Transaction } = require("../build/index");
 
@@ -227,7 +226,7 @@ async function up()
         }
 
 
-        await db.collection("migrations").insertOne({ _id: new ObjectId, migration_name: migration, created_at: new Date });
+        await db.collection("migrations").insertOne({ migration_name: migration, created_at: new Date });
 
         console.log(`Migration "${migration}" successfully applied.`);
     }
