@@ -1,7 +1,19 @@
 {
-  "name": "mongo-migrations",
+  "name": "mongo-migration-tool",
   "version": "1.0.0",
   "description": "Database migration tool for the MongoDB engine.",
+  "keywords": [
+    "node",
+    "nodejs",
+    "mongo",
+    "mongodb",
+    "database",
+    "migrations",
+    "migration-engine",
+    "mongo-migrations",
+    "migration-tools",
+    "mongo-migration-tool"
+  ],
   "main": "build/index.js",
   "scripts": {
     "build": "npx babel src --out-dir build --extensions=\".ts\" && tsc"
