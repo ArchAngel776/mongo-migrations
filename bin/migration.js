@@ -239,6 +239,82 @@ async function up()
 
 
 /**
+ * Revert specified already applied migrations.
+ * 
+ * @async
+ * @param {number} length
+ * @returns {Promise<void>}
+ */
+async function down(length)
+{
+    const client = await Connection.create(DB_HOST, DB_PORT).connect(DB_NAME, DB_USER, DB_PASS);
+    
+    const db = client.db(DB_NAME);
+
+
+    const migrationsToRevert = await db.collection("migrations").find()
+        .project({ migration_name: 1, created_at: 1 })
+        .sort({ created_at: 1 })
+        .limit(length)
+        .map(({ migration_name }) => migration_name)
+        .toArray();
+
+
+    if (migrationsToRevert.length === 0)
+    {
+        console.log("No existed migrations to revert.");
+        return;
+    }
+
+    console.log("Following migrations are going to be reverted:");
+
+    migrationsToRevert.forEach(migration => console.log(`\t${migration}`));
+
+
+    for (const migration of migrationsToRevert)
+    {
+        const transaction = new Transaction(client, db);
+
+        transaction.begin();
+
+
+        const Migration = require(`${process.cwd()}/migrations/${migration}`).default;
+
+        const mig = new Migration(db, transaction.getSession);
+
+
+        try
+        {
+            if (!await mig.revert())
+            {
+                console.log(`Cannot revert migration "${migration}" - internal migration's validation failed.`)
+
+                await transaction.rollback();
+                return;
+            }
+
+            await transaction.commit();
+        }
+        catch (error)
+        {
+            await client.close();
+            throw error;
+        }
+
+
+        await db.collection("migrations").deleteOne({ migration_name: migration });
+
+        console.log(`Migration "${migration}" successfully reverted.`);
+    }
+
+
+    await client.close();
+
+    console.log("All migrations successfully reverted.");
+}
+
+
+/**
  * Main execution function of CLI.
  * 
  * @async
@@ -271,6 +347,13 @@ async function main(command, args)
         case "up":
         {
             await up();
+            break;
+        }
+        case "down":
+        {
+            const [ length ] = args;
+
+            await down(parseInt(length) || 0);
             break;
         }
         default:
