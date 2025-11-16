@@ -256,7 +256,7 @@ async function down(length)
 
     const migrationsToRevert = await db.collection("migrations").find()
         .project({ migration_name: 1, created_at: 1 })
-        .sort({ created_at: 1 })
+        .sort({ created_at: -1 })
         .limit(length)
         .map(({ migration_name }) => migration_name)
         .toArray();
